@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Babu Pawar | Professional Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+.name {
+  font-size: 48px;
+  font-weight: bold;
+  text-align: center; /* keeps it centered */
+}
+
+.highlight {
+  background: linear-gradient(90deg, #00c6ff, #0072ff); /* Blue gradient */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 3s infinite linear;
+}
+
+@keyframes shine {
+  0% { filter: brightness(1); }
+  50% { filter: brightness(1.5); }
+  100% { filter: brightness(1); }
+}
+
+* { margin:0; padding:0; 
+    box-sizing:border-box; 
+    font-family:'Roboto', 
+    sans-serif;
+ }
+
+body {
+  background: url('https://c4.wallpaperflare.com/wallpaper/444/635/665/star-space-light-design-wallpaper-preview.jpg') no-repeat center center fixed;
+  background-size: cover;
+  color:#111827;
+  overflow-x:hidden;
+  position:relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background-color: rgba(0,0,0,0.35);
+  z-index:0;
+}
+
+#particle-canvas {
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  z-index:0;
+  pointer-events:none;
+}
+
+header, section, footer {
+  position: relative;
+  z-index:1;
+}
+
+header {
+  text-align:center;
+  padding:5rem 1rem;
+}
+header h1 {
+  font-size:3.5rem;
+  margin-bottom:0.5rem;
+  background: linear-gradient(90deg,#d3c5ce,#7873f5,#42f5b3);
+  -webkit-background-clip:text;
+  color:transparent;
+  animation: gradientMove 6s linear infinite;
+}
+header p { font-size:1.3rem; color:#fefefe; margin-bottom:1.5rem; }
+nav {
+  margin-top:2rem;
+  display:flex;
+  justify-content:center;
+  gap:2rem;
+  flex-wrap:wrap;
+}
+nav a { color:#fefefe; text-decoration:none; font-weight:600; transition:0.3s; font-size:1rem; }
+nav a:hover { color:#42f5b3; text-shadow:0 0 8px rgba(66,245,179,0.8); }
+
+@keyframes gradientMove { 0% { background-position:0% 50%; } 50% { background-position:100% 50%; } 100% { background-position:0% 50%; } }
+
+section {
+  padding:4rem 1rem;
+  max-width:1200px;
+  margin:0 auto;
+  text-align:center;
+  opacity:0;
+  transform: translateY(50px);
+  transition: all 0.8s ease-in-out;
+}
+
+section.visible {
+  opacity:1;
+  transform: translateY(0);
+}
+
+h2 { font-size:2.5rem; margin-bottom:2rem; color:#fefefe; text-shadow: 1px 1px 5px rgba(0,0,0,0.6); }
+
+/* About section font color */
+#about p {
+  color: #ffffff;
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+
+.grid {
+  display:grid;
+  gap:2.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  justify-items:center;
+}
+
+.card {
+  width:90%;
+  max-width:350px;
+  height:300px;
+  border-radius:1rem;
+  perspective:1000px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover { 
+  transform: scale(1.05); 
+  box-shadow:0 25px 50px rgba(0,0,0,0.35); 
+}
+
+.card-inner {
+  position:relative;
+  width:100%;
+  height:100%;
+  text-align:center;
+  transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  transform-style: preserve-3d;
+}
+.card:hover .card-inner { transform: rotateY(180deg); }
+
+.card-front, .card-back {
+  position:absolute;
+  width:100%;
+  height:100%;
+  backface-visibility:hidden;
+  border-radius:1rem;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  padding:2rem;
+  font-size:1rem;
+  color:#111827;
+}
+
+.card-front {
+  background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(224,231,255,0.9));
+  border: 1px solid rgba(0,0,0,0.1);
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+.card-back {
+  transform: rotateY(180deg);
+  background: linear-gradient(135deg, rgba(254,254,254,0.9), rgba(219,234,254,0.9));
+  border: 1px solid rgba(0,0,0,0.1);
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+.card-front i, .card-back i {
+  margin-bottom:1rem;
+  transition: transform 0.3s ease;
+}
+.card:hover i { transform: scale(1.2); }
+
+/* Modal */
+.modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.4); justify-content:center; align-items:center; z-index:999; }
+.modal-content { background:#f3f4f6; padding:2rem; border-radius:1rem; max-width:600px; width:90%; text-align:center; color:#111827; position:relative; }
+.close-btn { position:absolute; top:1rem; right:1rem; cursor:pointer; font-size:1.5rem; color:#111827; }
+
+.contact-form { display:flex; flex-direction:column; gap:1rem; max-width:500px; margin:0 auto; }
+.contact-form input, .contact-form textarea { padding:1rem; border-radius:0.5rem; border:1px solid #ccc; outline:none; }
+.contact-form button { padding:1rem; background:#42f5b3; color:#111827; border:none; border-radius:0.5rem; cursor:pointer; transition:0.3s; font-weight:600; }
+.contact-form button:hover { background:#7873f5; color:#fff; }
+
+footer { text-align:center; padding:2rem; background: rgba(241,245,249,0.85); color:#111827; }
+footer a { color:#111827; margin:0 0.5rem; transition:0.3s; }
+footer a:hover { color:#42f5b3; text-shadow:0 0 6px rgba(66,245,179,0.6); }
+
+/* Responsive */
+@media(max-width:768px){
+  header h1 { font-size:2.5rem; }
+  header p { font-size:1.1rem; }
+  nav { gap:1rem; }
+  .card { height:280px; }
+}
+@media(max-width:480px){
+  header { padding:3rem 1rem; }
+  .card { width:100%; height:260px; }
+  nav { flex-direction:column; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="particle-canvas"></canvas>
+
+<header>
+
+    <h1 class="name">
+        <span class="highlight">BABU PAWAR</span>      
+<p>Technical Support | Web Designer</p>
+<nav>
+<a href="#about">About Me</a>
+<a href="#experience">Experience</a>
+<a href="#project">Portfolio</a>
+<a href="#certificates">Certificates</a>
+<a href="#contact">Contact</a>
+</nav>
+</header>
+
+<section id="about">
+<h2>About Me</h2>
+<p>I’m Babu Pawar, a Technical Support Associate at Teleperformance Jaipur with hands-on experience delivering efficient technical solutions and exceptional customer support. 
+I also have experience as a Web Design Intern at ABG Pvt Ltd, Pune, skilled in HTML, CSS, JavaScript, UI/UX Design, and responsive web development. 
+Passionate about creating seamless digital experiences, I combine technical expertise, problem-solving abilities, and strong communication skills to deliver high-quality results in both support and web projects.</p>
+</section>
+
+<section id="experience">
+<h2>Experience</h2>
+<div class="grid" style="justify-content:center;">
+<div class="card">
+<div class="card-inner">
+<div class="card-front">
+<i class="fas fa-headset fa-3x"></i>
+<h3>Teleperformance Jaipur</h3>
+<p>Technical Support Associate<br>(Aug 2024 - Present)</p>
+</div>
+<div class="card-back">
+<h3>Skills</h3>
+<p>Technical Support, Communication, Problem Solving, Leadership, Team Management</p>
+</div>
+</div>
+</div>
+
+<div class="card">
+<div class="card-inner">
+<div class="card-front">
+<i class="fas fa-laptop-code fa-3x"></i>
+<h3>ABG Pvt Ltd, Pune</h3>
+<p>Web Design Intern<br>(Nov 2023 - Mar 2024)</p>
+</div>
+<div class="card-back">
+<h3>Skills</h3>
+<p>HTML, CSS, JavaScript, UI/UX Design, SEO, Web Design</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section id="project">
+<h2>Projects</h2>
+<div class="grid">
+<div class="card">
+<div class="card-inner">
+<div class="card-front">
+<i class="fas fa-book fa-3x"></i>
+<h3>Digital Book Library</h3><br>
+<p>Website redesign for local business. Improved UI/UX and cloud storage integration.</p>
+</div>
+<div class="card-back">
+<h3>Skills</h3><br>
+<p>HTML, CSS, JavaScript, UI/UX Design, Cloud Data Management</p>
+</div>
+</div>
+</div>
+
+<div class="card">
+<div class="card-inner">
+<div class="card-front">
+<i class="fas fa-user-check fa-3x"></i>
+<h3>Student Attendance Tracker</h3><br>
+<p>Interactive landing page for tracking attendance & contact info.</p>
+</div>
+<div class="card-back">
+<h3>Skills</h3><br>
+<p>HTML, CSS, JavaScript, Responsive Design, Data Management</p>
+</div>
+</div>
+</div>
+
+<div class="card">
+<div class="card-inner">
+<div class="card-front">
+<i class="fas fa-laptop-code fa-3x"></i>
+<h3>Portfolio Websites & Canvas</h3><br>
+<p>Responsive portfolio website to showcase professional projects.</p>
+</div>
+<div class="card-back">
+<h3>Skills</h3><br>
+<p>HTML, CSS, JavaScript, Web Design, Photoshop</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section id="certificates">
+<h2>Certificates</h2>
+<div class="grid">
+<div class="card" onclick="openModal('modal1')">
+<div class="card-inner">
+<div class="card-front">
+<i class="fas fa-certificate fa-3x"></i>
+<h3>PowerBI and Excel</h3><br>
+<p>Certified from Great Learning</p>
+</div>
+<div class="card-back">
+<h3>Skills Gained</h3><br>
+<p>Excel, creating dashboards, maintaining dashboards</p>
+</div>
+</div>
+</div>
+
+<div class="card" onclick="openModal('modal2')">
+<div class="card-inner">
+<div class="card-front">
+<i class="fas fa-certificate fa-3x"></i>
+<h3>Data Foundation Engineering By L&T</h3>
+</div>
+<div class="card-back">
+<h3>Skills Gained</h3>
+<p>MYSQL, Data management, Data cleaning. Ensures clean, organized, and accessible data across systems. Combines data modeling, ETL, and governance for analytics and decision-making.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<div id="modal1" class="modal">
+<div class="modal-content">
+<span class="close-btn" onclick="closeModal('modal1')">&times;</span>
+<h3>PowerBI and Excel</h3>
+<p>Completed PowerBI and Excel certification. Learned Excel, dashboard creation, and dashboard maintenance.</p>
+</div>
+</div>
+
+<div id="modal2" class="modal">
+<div class="modal-content">
+<span class="close-btn" onclick="closeModal('modal2')">&times;</span>
+<h3>Data Foundation Engineering By L&T</h3>
+<p>Learned MYSQL, data management, and data cleaning. Built skills to maintain clean, organized data for analytics and decision-making.</p>
+</div>
+</div>
+
+<section id="contact">
+<h2>Contact Me</h2>
+<form class="contact-form">
+<input type="text" placeholder="Your Name" required>
+<input type="email" placeholder="Your Email" required>
+<textarea rows="5" placeholder="Your Message" required></textarea>
+<button type="submit">Send Message</button>
+</form>
+<p>Or reach out directly:</p>
+<p>
+<a href="https://www.linkedin.com/in/babu-shankar-pawar-52712a24a" target="_blank">LinkedIn</a> |
+<a href="https://www.instagram.com/mr.babu_pawar__" target="_blank">Instagram</a>
+</p>
+</section>
+
+<footer>
+<p>&copy; 2025 Babu Pawar. All rights reserved.</p>
+<p>Connect with me: 
+<a href="https://www.linkedin.com/in/babu-shankar-pawar-52712a24a" target="_blank"><i class="fab fa-linkedin"></i></a>
+<a href="https://www.instagram.com/mr.babu_pawar__" target="_blank"><i class="fab fa-instagram"></i></a>
+</p>
+</footer>
+
+<script>
+// Particle animation
+const canvas = document.getElementById('particle-canvas');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+const particles = [];
+for(let i=0;i<120;i++){
+  particles.push({
+    x:Math.random()*canvas.width,
+    y:Math.random()*canvas.height,
+    radius:Math.random()*2+1,
+    dx:(Math.random()-0.5)*0.5,
+    dy:(Math.random()-0.5)*0.5,
+    color:`hsla(${Math.random()*360},50%,70%,0.5)`
+  });
+}
+function animateParticles(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particles.forEach(p=>{
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.radius,0,Math.PI*2);
+    ctx.fillStyle = p.color;
+    ctx.fill();
+    p.x+=p.dx; p.y+=p.dy;
+    if(p.x<0||p.x>canvas.width)p.dx*=-1;
+    if(p.y<0||p.y>canvas.height)p.dy*=-1;
+  });
+  requestAnimationFrame(animateParticles);
+}
+animateParticles();
+window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;});
+
+// Modal functions
+function openModal(id){document.getElementById(id).style.display='flex';}
+function closeModal(id){document.getElementById(id).style.display='none';}
+
+// Contact form
+document.querySelector('.contact-form').addEventListener('submit', e=>{
+  e.preventDefault();   
+  alert('Message sent successfully!');
+});
+
+// Scroll animations
+const sections = document.querySelectorAll('section');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){ entry.target.classList.add('visible'); }
+  });
+},{threshold:0.2});
+
+sections.forEach(section => observer.observe(section));
+</script>
+</body>
+</html>
