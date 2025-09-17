@@ -7,6 +7,40 @@
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
+/* Projects grid */
+.grid {
+  display:grid;
+  gap:2.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  justify-items:center;
+}
+
+.card {
+  width:90%;
+  max-width:350px;
+  height:300px;
+  border-radius:1rem;
+  perspective:1000px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover { 
+  transform: scale(1.05); 
+  box-shadow:0 25px 50px rgba(0,0,0,0.35); 
+}
+
+/* Certificates grid */
+.certificates-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.certificates-grid .card {
+  flex: 1 1 250px;   /* certificates a bit smaller */
+  max-width: 300px;
+  height: 300px;      /* let certificates adjust height */
+}
 .name {
   font-size: 48px;
   font-weight: bold;
@@ -33,7 +67,7 @@
  }
 
 body {
-  background: url('https://c4.wallpaperflare.com/wallpaper/620/81/253/pattern-design-dark-texture-wallpaper-preview.jpg') no-repeat center center fixed;
+  background: url('https://c4.wallpaperflare.com/wallpaper/380/523/681/design-neon-abstract-light-design-hd-wallpaper-preview.jpg') no-repeat center center fixed;
   background-size: cover;
   color:#111827;
   overflow-x:hidden;
@@ -115,26 +149,6 @@ h2 { font-size:2.5rem; margin-bottom:2rem; color:#fefefe; text-shadow: 1px 1px 5
   line-height: 1.7;
 }
 
-.grid {
-  display:grid;
-  gap:2.5rem;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  justify-items:center;
-}
-
-.card {
-  width:90%;
-  max-width:350px;
-  height:300px;
-  border-radius:1rem;
-  perspective:1000px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.card:hover { 
-  transform: scale(1.05); 
-  box-shadow:0 25px 50px rgba(0,0,0,0.35); 
-}
-
 .card-inner {
   position:relative;
   width:100%;
@@ -212,17 +226,16 @@ footer a:hover { color:#42f5b3; text-shadow:0 0 6px rgba(66,245,179,0.6); }
 <canvas id="particle-canvas"></canvas>
 
 <header>
-
     <h1 class="name">
         <span class="highlight">BABU PAWAR</span>      
-<p>Technical Support | Web Designer</p>
-<nav>
-<a href="#about">About Me</a>
-<a href="#experience">Experience</a>
-<a href="#project">Portfolio</a>
-<a href="#certificates">Certificates</a>
-<a href="#contact">Contact</a>
-</nav>
+    <p>Technical Support | Web Designer</p>
+    <nav>
+      <a href="#about">About Me</a>
+      <a href="#experience">Experience</a>
+      <a href="#project">Portfolio</a>
+      <a href="#certificates">Certificates</a>
+      <a href="#contact">Contact</a>
+    </nav>
 </header>
 
 <section id="about">
@@ -266,6 +279,14 @@ Passionate about creating seamless digital experiences, I combine technical expe
 </section>
 
 <section id="project">
+    <h2>Projects</h2>
+    <div class="grid">
+      <!-- existing project cards here -->
+    </div>
+  </section>
+  
+
+<section id="project">
 <h2>Projects</h2>
 <div class="grid">
 <div class="card">
@@ -296,6 +317,24 @@ Passionate about creating seamless digital experiences, I combine technical expe
 </div>
 </div>
 
+<!-- New Project Card -->
+<div class="card">
+    <div class="card-inner">
+      <div class="card-front">
+        <i class="fas fa-rocket fa-3x"></i>
+        <h3>Proxy re-encryption</h3>
+        <p>With the growing amount of data, the demand of big data storage significantly increases. 
+            Through the cloud center, data providers can conveniently share data stored in the center with others. </p>
+    </div>
+      <div class="card-back">
+        <h3>Skills</h3>
+        <p>The Java Virtual Machine (Java VM)<br>
+           The Java Application Programming Interface (Java API)<br>
+           Front-end Development</p>
+      </div>
+    </div>
+  </div>
+
 <div class="card">
 <div class="card-inner">
 <div class="card-front">
@@ -310,54 +349,97 @@ Passionate about creating seamless digital experiences, I combine technical expe
 </div>
 </div>
 </div>
+
 </section>
 
 <section id="certificates">
 <h2>Certificates</h2>
-<div class="grid">
-<div class="card" onclick="openModal('modal1')">
-<div class="card-inner">
-<div class="card-front">
-<i class="fas fa-certificate fa-3x"></i>
-<h3>PowerBI and Excel</h3><br>
-<p>Certified from Great Learning</p>
-</div>
-<div class="card-back">
-<h3>Skills Gained</h3><br>
-<p>Excel, creating dashboards, maintaining dashboards</p>
-</div>
-</div>
-</div>
+<div class="certificates-grid">
 
-<div class="card" onclick="openModal('modal2')">
-<div class="card-inner">
-<div class="card-front">
-<i class="fas fa-certificate fa-3x"></i>
-<h3>Data Foundation Engineering By L&T</h3>
-</div>
-<div class="card-back">
-<h3>Skills Gained</h3>
-<p>MYSQL, Data management, Data cleaning. Ensures clean, organized, and accessible data across systems. Combines data modeling, ETL, and governance for analytics and decision-making.</p>
-</div>
-</div>
-</div>
+  <!-- Certificate 1 -->
+  <div class="card" onclick="openModal('modal1')">
+    <div class="card-inner">
+      <div class="card-front">
+        <i class="fas fa-certificate fa-3x"></i>
+        <h3>PowerBI and Excel</h3><br>
+        <p>Certified from Great Learning</p>
+      </div>
+      <div class="card-back">
+        <h3>Skills Gained</h3><br>
+        <p>Excel, creating dashboards, maintaining dashboards</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Certificate 2 -->
+  <div class="card" onclick="openModal('modal2')">
+    <div class="card-inner">
+      <div class="card-front">
+        <i class="fas fa-certificate fa-3x"></i>
+        <h3>Data Foundation Engineering By L&T</h3>
+      </div>
+      <div class="card-back">
+        <h3>Skills Gained</h3>
+        <p>MYSQL, Data management, Data cleaning, ETL, Governance</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" onclick="openModal('modal3')">
+    <div class="card-inner">
+      <div class="card-front">
+        <i class="fas fa-certificate fa-3x"></i>
+        <h3>Project Development using Java</h3><br>
+        <p>Certified from Udemy</p>
+      </div>
+      <div class="card-back">
+        <h3>Skills Gained</h3><br>
+        <p>Completed the certification in the frame  works with the Java and the basic development with the frameworks</p>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="card" onclick="openModal('modal3')">
+    <div class="card-inner">
+      <div class="card-front">
+        <i class="fas fa-certificate fa-3x"></i>
+        <h3>SQL Query</h3><br>
+        <p>Certified from Great Learning</p>
+      </div>
+      <div class="card-back">
+        <h3>Skills Gained</h3><br>
+        <p>Completed the certification in the basic of the SQL query and trained with the SQL language and managing with the data management</p>
+      </div>
+    </div>
+  </div>
+
 </div>
 </section>
 
+<!-- Certificate Modals -->
 <div id="modal1" class="modal">
-<div class="modal-content">
-<span class="close-btn" onclick="closeModal('modal1')">&times;</span>
-<h3>PowerBI and Excel</h3>
-<p>Completed PowerBI and Excel certification. Learned Excel, dashboard creation, and dashboard maintenance.</p>
-</div>
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeModal('modal1')">&times;</span>
+    <h3>PowerBI and Excel</h3>
+    <p>Completed PowerBI and Excel certification. Learned Excel, dashboard creation, and dashboard maintenance.</p>
+  </div>
 </div>
 
 <div id="modal2" class="modal">
-<div class="modal-content">
-<span class="close-btn" onclick="closeModal('modal2')">&times;</span>
-<h3>Data Foundation Engineering By L&T</h3>
-<p>Learned MYSQL, data management, and data cleaning. Built skills to maintain clean, organized data for analytics and decision-making.</p>
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeModal('modal2')">&times;</span>
+    <h3>Data Foundation Engineering By L&T</h3>
+    <p>Learned MYSQL, data management, and data cleaning. Built skills to maintain clean, organized data for analytics and decision-making.</p>
+  </div>
 </div>
+
+<div id="modal3" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeModal('modal3')">&times;</span>
+    <h3>Project Development using Java</h3>
+    <p>Completed the certification in the frame  works with the Java and the basic development with the frameworks</p>
+  </div>
 </div>
 
 <section id="contact">
@@ -432,9 +514,8 @@ const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if(entry.isIntersecting){ entry.target.classList.add('visible'); }
   });
-},{threshold:0.2});
-
-sections.forEach(section => observer.observe(section));
+},{ threshold:0.2 });
+sections.forEach(sec => observer.observe(sec));
 </script>
 </body>
 </html>
